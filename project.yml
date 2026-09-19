@@ -1,0 +1,22 @@
+name: CryptoBench
+options:
+  bundleIdPrefix: com.fliptrackerpro
+targets:
+  CryptoBench:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources: [CryptoBench]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.fliptrackerpro.cryptobench
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+    info:
+      path: CryptoBench/Info.plist
+      properties:
+        CFBundleDisplayName: Crypto Bench
+        UILaunchScreen: {}
