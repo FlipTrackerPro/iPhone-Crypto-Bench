@@ -1,0 +1,28 @@
+name: Build iOS Benchmark
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - phase1-benchmark
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        run: xcodegen generate
+      - name: Build unsigned app
+        run: xcodebuild -project CryptoBench.xcodeproj -scheme CryptoBench -configuration Release -sdk iphoneos -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+      - name: Package IPA
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/CryptoBench.app Payload/
+          zip -r CryptoBench-unsigned.ipa Payload
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: CryptoBench-unsigned
+          path: CryptoBench-unsigned.ipa
